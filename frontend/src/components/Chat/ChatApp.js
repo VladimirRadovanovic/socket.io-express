@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import socket from "../../socket";
+import Chat from "./Chat";
 
 function ChatApp() {
     const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)

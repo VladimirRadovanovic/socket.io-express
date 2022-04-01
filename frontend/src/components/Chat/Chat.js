@@ -109,8 +109,11 @@ function Chat() {
 
 
     return (
-        <>
-        </>
+        <div>
+            {users.map(user => (
+                <User key={user.userID} user={user} selected={selectedUser === user} select={onSelectUser} />
+            ))}
+        </div>
     )
 }
 
