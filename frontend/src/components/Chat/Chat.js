@@ -2,25 +2,27 @@ import { useState, useEffect } from "react";
 
 import socket from "../../socket";
 import User from "./User";
+import MessagePanel from "./MessagePanel";
+import './Chat.css'
 
 function Chat() {
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
-    const [message, setMessage] = useState('')
+    // const [message, setMessage] = useState('')
 
 
-    const onMessage = (e) => {
-        if(selectedUser) {
-            socket.emit('private message', {
-                content: message,
-                to: selectedUser.userID
-            })
-            selectedUser.messages.push({
-                content: message,
-                fromSelf: true
-            })
-        }
-    }
+    // const onMessage = (e) => {
+    //     if(selectedUser) {
+    //         socket.emit('private message', {
+    //             content: message,
+    //             to: selectedUser.userID
+    //         })
+    //         selectedUser.messages.push({
+    //             content: message,
+    //             fromSelf: true
+    //         })
+    //     }
+    // }
 
 
     const onSelectUser = (user) => {
@@ -111,9 +113,15 @@ function Chat() {
 
     return (
         <div>
+            <div className="left-panel">
             {users.map(user => (
                 <User key={user.userID} user={user} selected={selectedUser === user} select={onSelectUser} />
             ))}
+            </div>
+            {selectedUser && (
+                <MessagePanel user={selectedUser} selectedUser={selectedUser} />
+            )
+            }
         </div>
     )
 }
