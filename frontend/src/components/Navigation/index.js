@@ -10,7 +10,10 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
+        <>
       <ProfileButton user={sessionUser} />
+      <NavLink to='/chat'>Chat</NavLink>
+        </>
     );
   } else {
     sessionLinks = (

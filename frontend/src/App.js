@@ -5,6 +5,10 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+// import ChatApp from "./components/Chat/ChatApp";
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -12,6 +16,14 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+
+// const URL = "http://localhost:5000";
+// const socket = io();
+
+// socket.on('message', message => {
+//   console.log(message)
+// })
 
   return (
     <>
@@ -24,6 +36,9 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          {/* <Route path='/chat'> */}
+            {/* <ChatApp /> */}
+          {/* </Route> */}
         </Switch>
       )}
     </>
@@ -31,4 +46,3 @@ function App() {
 }
 
 export default App;
-
