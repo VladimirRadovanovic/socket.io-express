@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import socket from "../../socket";
+import User from "./User";
 
 function Chat() {
     const [users, setUsers] = useState([])
