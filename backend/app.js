@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 
+const http = require('http')
+const socketio = require('socket.io')
+
 
 
 const routes = require('./routes');
@@ -16,6 +19,12 @@ const { environment } = require('./config');
 const isProduction = environment === 'production';
 
 const app = express();
+const server = http.createServer(app)
+const io = socketio(server, {
+    cors: {
+        origin: "*",
+      }
+})
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -77,5 +86,9 @@ app.use((err, _req, res, _next) => {
     });
   });
 
+  io.on('connection', socket => {
+      console.log('New WS connection')
+  })
 
-module.exports = app;
+
+module.exports = server;
