@@ -5,7 +5,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-// import ChatApp from "./components/Chat/ChatApp";
+import ChatApp from "./components/Chat/ChatApp";
 
 
 
@@ -36,9 +36,9 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          {/* <Route path='/chat'> */}
-            {/* <ChatApp /> */}
-          {/* </Route> */}
+          <Route path='/chat'>
+            <ChatApp />
+         </Route>
         </Switch>
       )}
     </>
