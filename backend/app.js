@@ -104,6 +104,12 @@ app.use((err, _req, res, _next) => {
         userID: id,
         username: socket.username,
       });
+      console.log(users,
+
+        'users **************************************************'
+
+
+        , 'socket')
     }
     socket.emit("users", users);
 
@@ -115,6 +121,7 @@ app.use((err, _req, res, _next) => {
 
     // forward the private message to the right recipient
     socket.on("private message", ({ content, to }) => {
+        console.log(content, to, '!!!!!!!!!!!!!!!!')
       socket.to(to).emit("private message", {
         content,
         from: socket.id,
@@ -125,12 +132,7 @@ app.use((err, _req, res, _next) => {
     socket.on("disconnect", () => {
       socket.broadcast.emit("user disconnected", socket.id);
     });
-    console.log(users,
 
-        'users **************************************************'
-
-
-        , socket, 'socket')
   });
 
 

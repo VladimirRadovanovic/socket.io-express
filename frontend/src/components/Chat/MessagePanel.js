@@ -6,7 +6,10 @@ import './MessagePanel.css'
 
 function MessagePanel({ user, selectedUser }) {
     const [message, setMessage] = useState('')
-    console.log('selected user', selectedUser)
+    // const [sentMessages, setSentMessages] = useState([])
+    // console.log('sent messages', sentMessages)
+    console.log(user?.messages, ' user messages')
+    console.log(selectedUser?.messages, ' selected user messages')
 
 
     const onMessage = (e) => {
@@ -24,16 +27,17 @@ function MessagePanel({ user, selectedUser }) {
                 content: message,
                 fromSelf: true
             })
+            // setSentMessages(selectedUser?.messages)
         }
-        console.log(selectedUser?.message, 'messages user')
+        console.log(selectedUser?.messages, 'messages user')
         setMessage('')
     }
 
     const displaySender = (message, index) => {
         return (
             index === 0 ||
-            user.messages[index - 1].fromSelf !==
-            user.messages[index].fromSelf
+            user?.messages[index - 1]?.fromSelf !==
+            user?.messages[index]?.fromSelf
         )
     }
 
@@ -48,16 +52,17 @@ function MessagePanel({ user, selectedUser }) {
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
             <ul className="messages">
-                {user?.messages?.map((message, index) => {
+                {user?.messages?.map((message, index) => (
                     <li className="message" key={index}>
                             {displaySender(message, index) && (
                                 <div className="sender">
+                                    <span>tttttttt</span>
                                     {message.fromSelf ? "(yourself)" : user.username}
                                 </div>
                             )}
                             {message.content}
                     </li>
-                })}
+                ))}
             </ul>
             <form onSubmit={onSubmit} className="form">
                 <textarea

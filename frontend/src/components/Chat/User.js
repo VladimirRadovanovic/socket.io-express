@@ -5,7 +5,7 @@ import './User.css'
 import StatusIcon from "./StatusIcon";
 
 function User({ user, selected, select }) {
-    console.log('user shown', select)
+console.log(user, 'user in user.js', selected, 'selected boolean')
 
     return (
         <div onClick={() => select(user)} className={selected}>

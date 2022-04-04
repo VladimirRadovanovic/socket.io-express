@@ -8,7 +8,7 @@ import './Chat.css'
 function Chat() {
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
-    console.log('chat shown', users, selectedUser)
+    console.log('chat********************* shown', users, selectedUser)
     // const [message, setMessage] = useState('')
 
 
@@ -55,25 +55,28 @@ function Chat() {
             user.hasNewMessages = false;
         };
 
-        socket.on('users', (users) => {
-            console.log(users, 'users n the on')
-            users.forEach(user => {
+        socket.on("users", (use) => {
+            console.log(use,
+
+                'users n the on!!!!!!!!!!!!************ use')
+            use.forEach(user => {
                 user.self = user.userID === socket.id;
                 initReactiveProperties(user);
             })
 
-            users = users.sort((a, b) => {
+            use = use.sort((a, b) => {
                 if (a.self) return -1;
                 if (b.self) return 1;
                 if (a.username < b.username) return -1;
                 return a.username > b.username ? 1 : 0;
             });
-            setUsers(u => [...u, ...users])
+            setUsers(use)
         })
 
         socket.on('user connected', user => {
             initReactiveProperties(user)
-            setUsers(users => [...users, user])
+            setUsers(u => [...u, user])
+            console.log('in component user connected', user, users)
         })
 
         socket.on("user disconnected", (id) => {
