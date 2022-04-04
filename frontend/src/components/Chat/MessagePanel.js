@@ -3,13 +3,19 @@ import { useState } from "react";
 import socket from "../../socket";
 import StatusIcon from "./StatusIcon";
 import './MessagePanel.css'
+import { useEffect } from "react";
 
 function MessagePanel({ user, selectedUser }) {
     const [message, setMessage] = useState('')
+
+
+
+
     // const [sentMessages, setSentMessages] = useState([])
+
     // console.log('sent messages', sentMessages)
     console.log(user?.messages, ' user messages')
-    console.log(selectedUser?.messages, ' selected user messages')
+    // console.log(selectedUser?.messages, ' selected user messages')
 
 
     const onMessage = (e) => {

@@ -32,6 +32,10 @@ function Chat() {
     }
 
 
+
+          useEffect(() => {
+              console.log('in use effect')
+
     // useEffect(() => {
         socket.on('connect', () => {
             users.forEach(user => {
@@ -104,9 +108,6 @@ function Chat() {
               }
             }
           });
-
-          useEffect(() => {
-              console.log('in use effect')
 
             return () => {
                 socket.off("connect");
