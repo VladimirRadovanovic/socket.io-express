@@ -38,6 +38,9 @@ function SelectUsername({ setUsernameFalse, setUsernameTrue }) {
         e.preventDefault()
         socket.auth = { username }
         socket.connect()
+        setUsernameTrue()
+        setUsername('')
+        // console.log(socket, 'socket')
     }
 
     return (

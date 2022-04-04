@@ -5,9 +5,10 @@ import './User.css'
 import StatusIcon from "./StatusIcon";
 
 function User({ user, selected, select }) {
+    console.log('user shown', select)
 
     return (
-        <div onClick={select} className={selected}>
+        <div onClick={() => select(user)} className={selected}>
             <div className="description">
                 <div className="name">
                     {user.username} {user.self ? " (yourself)" : ""}

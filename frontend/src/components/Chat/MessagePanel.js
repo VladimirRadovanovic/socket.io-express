@@ -6,6 +6,7 @@ import './MessagePanel.css'
 
 function MessagePanel({ user, selectedUser }) {
     const [message, setMessage] = useState('')
+    console.log('selected user', selectedUser)
 
 
     const onMessage = (e) => {
@@ -19,11 +20,12 @@ function MessagePanel({ user, selectedUser }) {
                 content: message,
                 to: selectedUser.userID
             })
-            selectedUser.messages.push({
+            selectedUser?.messages?.push({
                 content: message,
                 fromSelf: true
             })
         }
+        console.log(selectedUser?.message, 'messages user')
         setMessage('')
     }
 
@@ -46,7 +48,7 @@ function MessagePanel({ user, selectedUser }) {
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
             <ul className="messages">
-                {user.messages.map((message, index) => {
+                {user?.messages?.map((message, index) => {
                     <li className="message" key={index}>
                             {displaySender(message, index) && (
                                 <div className="sender">

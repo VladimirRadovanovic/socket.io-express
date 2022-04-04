@@ -125,6 +125,12 @@ app.use((err, _req, res, _next) => {
     socket.on("disconnect", () => {
       socket.broadcast.emit("user disconnected", socket.id);
     });
+    console.log(users,
+
+        'users **************************************************'
+
+
+        , socket, 'socket')
   });
 
 
