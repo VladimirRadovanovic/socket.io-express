@@ -5,10 +5,10 @@ import './User.css'
 import StatusIcon from "./StatusIcon";
 
 function User({ user, selected, select }) {
-console.log(user, 'user in user.js', selected, 'selected boolean')
+
 
     return (
-        <div onClick={() => select(user)} className={selected}>
+        <div onClick={() => select(user)} className={selected.toString()}>
             <div className="description">
                 <div className="name">
                     {user.username} {user.self ? " (yourself)" : ""}

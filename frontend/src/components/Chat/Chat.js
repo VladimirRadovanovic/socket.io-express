@@ -8,8 +8,9 @@ import './Chat.css'
 function Chat() {
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
-    console.log('chat********************* shown', users, selectedUser)
-    // const [message, setMessage] = useState('')
+
+    const [selectedMessages, setSelectedMessage] = useState([])
+    // console.log(message, 'message from user')
 
 
     // const onMessage = (e) => {
@@ -28,13 +29,14 @@ function Chat() {
 
     const onSelectUser = (user) => {
         setSelectedUser(user)
+        setSelectedMessage(user.messages)
         user.hasNewMessages = false
     }
 
 
 
           useEffect(() => {
-              console.log('in use effect')
+
 
     // useEffect(() => {
         socket.on('connect', () => {
@@ -60,9 +62,7 @@ function Chat() {
         };
 
         socket.on("users", (use) => {
-            console.log(use,
 
-                'users n the on!!!!!!!!!!!!************ use')
             use.forEach(user => {
                 user.self = user.userID === socket.id;
                 initReactiveProperties(user);
@@ -80,7 +80,7 @@ function Chat() {
         socket.on('user connected', user => {
             initReactiveProperties(user)
             setUsers(u => [...u, user])
-            console.log('in component user connected', user, users)
+
         })
 
         socket.on("user disconnected", (id) => {
@@ -94,6 +94,7 @@ function Chat() {
         });
 
         socket.on("private message", ({ content, from }) => {
+
             for (let i = 0; i < users.length; i++) {
               const user = users[i];
               if (user.userID === from) {
@@ -104,9 +105,11 @@ function Chat() {
                 if (user !== selectedUser) {
                   user.hasNewMessages = true;
                 }
+                // setMessage(user?.messages)
                 break;
-              }
             }
+        }
+
           });
 
             return () => {
@@ -132,7 +135,7 @@ function Chat() {
             ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} selectedUser={selectedUser} />
+                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} />
             )
             }
         </div>

@@ -5,8 +5,11 @@ import StatusIcon from "./StatusIcon";
 import './MessagePanel.css'
 import { useEffect } from "react";
 
-function MessagePanel({ user, selectedUser }) {
+function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
     const [message, setMessage] = useState('')
+    // const [length, setLength] = useState(user.messages.length)
+
+
 
 
 
@@ -14,8 +17,8 @@ function MessagePanel({ user, selectedUser }) {
     // const [sentMessages, setSentMessages] = useState([])
 
     // console.log('sent messages', sentMessages)
-    console.log(user?.messages, ' user messages')
-    // console.log(selectedUser?.messages, ' selected user messages')
+
+    // console.log(user?.messages, ' selected user messages')
 
 
     const onMessage = (e) => {
@@ -24,18 +27,19 @@ function MessagePanel({ user, selectedUser }) {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if(selectedUser) {
+        if(user) {
             socket.emit('private message', {
                 content: message,
-                to: selectedUser.userID
+                to: user.userID
             })
-            selectedUser?.messages?.push({
+            user?.messages?.push({
                 content: message,
                 fromSelf: true
             })
-            // setSentMessages(selectedUser?.messages)
+            // setSentMessages(user?.messages)
+            setSelectedMessage(m => [...m, {content: message, fromSelf: true}])
         }
-        console.log(selectedUser?.messages, 'messages user')
+        console.log(user?.messages, 'messages user')
         setMessage('')
     }
 
@@ -58,14 +62,14 @@ function MessagePanel({ user, selectedUser }) {
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
             <ul className="messages">
-                {user?.messages?.map((message, index) => (
+                {selectedMessages?.map((message, index) => (
                     <li className="message" key={index}>
                             {displaySender(message, index) && (
                                 <div className="sender">
-                                    <span>tttttttt</span>
                                     {message.fromSelf ? "(yourself)" : user.username}
                                 </div>
                             )}
+                            {/* {length} */}
                             {message.content}
                     </li>
                 ))}

@@ -6,7 +6,7 @@ import SelectUsername from "./SelectUsername";
 
 function ChatApp() {
     const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
-    console.log(usernameAlreadySelected, 'selected')
+
     // const [errors, setErrors] = useState([])
 
     // const onUsernameSelection = (username) => {
