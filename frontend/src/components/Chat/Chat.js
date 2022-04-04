@@ -107,6 +107,7 @@ function Chat() {
 
           useEffect(() => {
               console.log('in use effect')
+
             return () => {
                 socket.off("connect");
                 socket.off("disconnect");
@@ -115,7 +116,7 @@ function Chat() {
                 socket.off("user disconnected");
                 socket.off("private message");
               }
-          }, [users, socket, selectedUser])
+          }, [])
 
 
 
