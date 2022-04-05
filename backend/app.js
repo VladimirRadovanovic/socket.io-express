@@ -98,6 +98,7 @@ app.use((err, _req, res, _next) => {
 
   io.on("connection", (socket) => {
     // fetch existing users
+    console.log('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
     const users = [];
     for (let [id, socket] of io.of("/").sockets) {
       users.push({
@@ -130,6 +131,7 @@ app.use((err, _req, res, _next) => {
 
     // notify users upon disconnection
     socket.on("disconnect", () => {
+        console.log('disconected!!!!!!!!!!!!!!!!!!!!!!!')
       socket.broadcast.emit("user disconnected", socket.id);
     });
 

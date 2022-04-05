@@ -5,13 +5,24 @@ import User from "./User";
 import MessagePanel from "./MessagePanel";
 import './Chat.css'
 
-function Chat() {
+function Chat({user}) {
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
+    console.log(users, 'users))))))))))))')
 
     const [selectedMessages, setSelectedMessage] = useState([])
     console.log(selectedMessages, 'compare messages')
     // console.log(message, 'message from user')
+
+
+    useEffect(() => {
+        socket.auth = { 'username': user?.username }
+        socket.connect()
+
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
 
 
     // const onMessage = (e) => {
@@ -36,7 +47,7 @@ function Chat() {
 
 
 
-          useEffect(() => {
+    useEffect(() => {
 
 
     // useEffect(() => {
@@ -63,7 +74,7 @@ function Chat() {
         };
 
         socket.on("users", (use) => {
-
+            console.log(use, 'useeeeeeeee')
             use.forEach(user => {
                 user.self = user.userID === socket.id;
                 initReactiveProperties(user);
@@ -75,7 +86,7 @@ function Chat() {
                 if (a.username < b.username) return -1;
                 return a.username > b.username ? 1 : 0;
             });
-            setUsers(use)
+            setUsers([...use])
         })
 
         socket.on('user connected', user => {

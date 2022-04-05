@@ -4,10 +4,17 @@ import socket from "../../socket";
 import Chat from "./Chat";
 import SelectUsername from "./SelectUsername";
 
-function ChatApp() {
+function ChatApp({ user }) {
     const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
 
     // const [errors, setErrors] = useState([])
+
+    // useEffect(() => {
+    //     socket.auth = { 'username': user?.username }
+    //     socket.connect()
+
+    // }, [user, socket, user?.username])
+
 
     // const onUsernameSelection = (username) => {
     //     setUsernameAlreadySelected(true)
@@ -43,7 +50,7 @@ function ChatApp() {
                     <li key={error}>{error}</li>
                 ))}
             </ul> */}
-            {usernameAlreadySelected ? <Chat /> : <SelectUsername setUsernameFalse={setUsernameFalse} setUsernameTrue={setUsernameTrue} />}
+             <Chat user={user} />
         </div>
     )
 }
