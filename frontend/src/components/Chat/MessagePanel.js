@@ -8,6 +8,7 @@ import { useEffect } from "react";
 function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
     const [message, setMessage] = useState('')
     // const [length, setLength] = useState(user.messages.length)
+    console.log(selectedMessages, 'selected messages')
 
 
 
@@ -37,9 +38,11 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
                 fromSelf: true
             })
             // setSentMessages(user?.messages)
-            setSelectedMessage(m => [...m, {content: message, fromSelf: true}])
+            // setSelectedMessage(m => [...m, {content: message, fromSelf: true}])
         }
         console.log(user?.messages, 'messages user')
+        setSelectedMessage(user?.messages)
+
         setMessage('')
     }
 

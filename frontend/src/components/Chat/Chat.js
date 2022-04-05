@@ -105,7 +105,7 @@ function Chat() {
                 if (user !== selectedUser) {
                   user.hasNewMessages = true;
                 }
-                // setMessage(user?.messages)
+                setSelectedMessage(user.messages)
                 break;
             }
         }
