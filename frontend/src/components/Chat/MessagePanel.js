@@ -41,7 +41,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
             // setSelectedMessage(m => [...m, {content: message, fromSelf: true}])
         }
         console.log(user?.messages, 'messages user')
-        setSelectedMessage([...user.messages])
+        setSelectedMessage([...user?.messages])
 
         setMessage('')
     }

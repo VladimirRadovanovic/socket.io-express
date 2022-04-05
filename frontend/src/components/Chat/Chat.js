@@ -106,8 +106,8 @@ function Chat() {
                 if (user !== selectedUser) {
                   user.hasNewMessages = true;
                 }
-                console.log(user.messages,'mmmmmm')
-                setSelectedMessage([...user.messages])
+                console.log(user?.messages,'mmmmmm******MMMMMMMMMMMMM')
+                setSelectedMessage([...user?.messages])
                 break;
             }
         }
