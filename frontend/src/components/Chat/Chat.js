@@ -10,6 +10,7 @@ function Chat() {
     const [selectedUser, setSelectedUser] = useState(null)
 
     const [selectedMessages, setSelectedMessage] = useState([])
+    console.log(selectedMessages, 'compare messages')
     // console.log(message, 'message from user')
 
 
@@ -105,7 +106,8 @@ function Chat() {
                 if (user !== selectedUser) {
                   user.hasNewMessages = true;
                 }
-                setSelectedMessage(user?.messages)
+                console.log(user.messages,'mmmmmm')
+                setSelectedMessage([...user.messages])
                 break;
             }
         }
