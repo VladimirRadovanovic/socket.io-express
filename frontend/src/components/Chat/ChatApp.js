@@ -8,6 +8,14 @@ function ChatApp({ user }) {
     const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
 
     // const [errors, setErrors] = useState([])
+    useEffect(() => {
+        socket.auth = { 'username': user?.username }
+        socket.connect()
+
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
 
     // useEffect(() => {
     //     socket.auth = { 'username': user?.username }

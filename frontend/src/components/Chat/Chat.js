@@ -15,14 +15,14 @@ function Chat({user}) {
     // console.log(message, 'message from user')
 
 
-    useEffect(() => {
-        socket.auth = { 'username': user?.username }
-        socket.connect()
+    // useEffect(() => {
+    //     socket.auth = { 'username': user?.username }
+    //     socket.connect()
 
-        return () => {
-            socket.disconnect()
-        }
-    }, [])
+    //     return () => {
+    //         socket.disconnect()
+    //     }
+    // }, [])
 
 
     // const onMessage = (e) => {
@@ -74,7 +74,7 @@ function Chat({user}) {
         };
 
         socket.on("users", (use) => {
-            console.log(use, 'useeeeeeeee')
+            // console.log(use, 'useeeeeeeee')
             use.forEach(user => {
                 user.self = user.userID === socket.id;
                 initReactiveProperties(user);
@@ -133,7 +133,7 @@ function Chat({user}) {
                 socket.off("user disconnected");
                 socket.off("private message");
               }
-          }, [])
+          }, [users, user])
 
 
 
