@@ -9,13 +9,28 @@ function ChatApp({ user }) {
 
     // const [errors, setErrors] = useState([])
     useEffect(() => {
-        socket.auth = { 'username': user?.username }
-        socket.connect()
+        const sessionID = localStorage.getItem("sessionID");
+        console.log(sessionID, 'sessionID@@@@@@@@##########')
+        if (sessionID) {
+            // this.usernameAlreadySelected = true;
+            socket.auth = { sessionID, 'username': user.username };
+            socket.connect();
+        }
+        // console.log(' am I connecting????????????')
+
+        // socket.on("session", ({ sessionID, userID }) => {
+        //     // attach the session ID to the next reconnection attempts
+        //     socket.auth = { sessionID };
+        //     // store it in the localStorage
+        //     localStorage.setItem("sessionID", sessionID);
+        //     // save the ID of the user
+        //     socket.userID = userID;
+        // });
 
         return () => {
             socket.disconnect()
         }
-    }, [])
+    }, [user])
 
     // useEffect(() => {
     //     socket.auth = { 'username': user?.username }
@@ -58,7 +73,7 @@ function ChatApp({ user }) {
                     <li key={error}>{error}</li>
                 ))}
             </ul> */}
-             <Chat user={user} />
+            <Chat user={user} />
         </div>
     )
 }

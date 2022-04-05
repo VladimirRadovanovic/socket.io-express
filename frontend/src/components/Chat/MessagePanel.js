@@ -29,6 +29,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
     const onSubmit = (e) => {
         e.preventDefault()
         if(user) {
+            console.log(user, 'user')
             socket.emit('private message', {
                 content: message,
                 to: user.userID
