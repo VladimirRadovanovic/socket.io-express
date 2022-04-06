@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const crypto = require("crypto");
+const { User } = require('./db/models');
 
 
 const { InMemorySessionStore } = require('./sessionStore');
@@ -124,19 +125,21 @@ io.use((socket, next) => {
     socket.sessionID = socket.handshake.auth.sessionID
     socket.userID = socket.handshake.auth.userID
     socket.username = socket.handshake.auth.username
-    console.log(socket, socket.sessionID, socket.username, socket.userID)
+    // socket.connected = socket.handshake.auth.connected
+    console.log(socket, socket.sessionID, socket.username, socket.userID, socket.connected)
     next()
 });
 
 
-io.on("connection", (socket) => {
+io.on("connection", async(socket) => {
 
     // persist session
-    sessionStore.saveSession(socket.sessionID, {
-        userID: socket.userID,
-        username: socket.username,
-        connected: true,
-    });
+    // sessionStore.saveSession(socket.sessionID, {
+    //     userID: socket.userID,
+    //     username: socket.username,
+    //     connected: true,
+    // });
+    socket.connected = true;
 
     socket.emit("session", {
         sessionID: socket.sessionID,
@@ -150,27 +153,27 @@ io.on("connection", (socket) => {
 
     const users = [];
 
-    const messagesPerUser = new Map();
-    messageStore.findMessagesForUser(socket.userID).forEach((message) => {
-      const { from, to } = message;
-      const otherUser = socket.userID === from ? to : from;
-      if (messagesPerUser.has(otherUser)) {
-        messagesPerUser.get(otherUser).push(message);
-      } else {
-        messagesPerUser.set(otherUser, [message]);
-      }
-    });
+    // const messagesPerUser = new Map();
+    // messageStore.findMessagesForUser(socket.userID).forEach((message) => {
+    //   const { from, to } = message;
+    //   const otherUser = socket.userID === from ? to : from;
+    //   if (messagesPerUser.has(otherUser)) {
+    //     messagesPerUser.get(otherUser).push(message);
+    //   } else {
+    //     messagesPerUser.set(otherUser, [message]);
+    //   }
+    // });
 
-    sessionStore.findAllSessions().forEach((session) => {
-        users.push({
+    // sessionStore.findAllSessions().forEach((session) => {
+    //     users.push({
 
-          userID: session.userID,
-          username: session.username,
-          connected: session.connected,
-          messages: messagesPerUser.get(session.userID) || [],
-        });
+    //       userID: session.userID,
+    //       username: session.username,
+    //       connected: session.connected,
+    //       messages: messagesPerUser.get(session.userID) || [],
+    //     });
 
-      });
+    //   });
     socket.emit("users", users);
 
     // notify existing users
