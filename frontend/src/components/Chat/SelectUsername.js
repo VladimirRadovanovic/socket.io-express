@@ -47,9 +47,9 @@ function SelectUsername({ setUsernameFalse, setUsernameTrue }) {
         <div className="select-username">
             <form onSubmit={handleSubmit}>
             <ul>
-                {errors.map(error => (
+                {/* {errors.map(error => (
                     <li key={error}>{error}</li>
-                ))}
+                ))} */}
             </ul>
                     <input
                     placeholder="Your username..."

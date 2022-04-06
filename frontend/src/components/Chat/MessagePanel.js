@@ -5,10 +5,12 @@ import StatusIcon from "./StatusIcon";
 import './MessagePanel.css'
 import { useEffect } from "react";
 
-function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
+function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, toUser }) {
     const [message, setMessage] = useState('')
     // const [length, setLength] = useState(user.messages.length)
     console.log(selectedMessages, 'selected messages')
+
+    console.log(user, toUser, 'comapre to user and dkajdas')
 
 
 
@@ -21,6 +23,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
 
     // console.log(user?.messages, ' selected user messages')
 
+    
 
     const onMessage = (e) => {
         setMessage(e.target.value)
@@ -29,6 +32,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
     const onSubmit = (e) => {
         e.preventDefault()
         if(user) {
+            console.log(user, 'user')
             socket.emit('private message', {
                 content: message,
                 to: user.userID
@@ -65,7 +69,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage }) {
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
             <ul className="messages">
-                {selectedMessages?.map((message, index) => (
+                {(user.userID === fromUser || selectedMessages[0]?.fromSelf) && selectedMessages?.map((message, index) => (
                     <li className="message" key={index}>
                             {displaySender(message, index) && (
                                 <div className="sender">
