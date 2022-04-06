@@ -88,7 +88,7 @@ function Chat({ user }) {
                     console.log('in for each2 !!!!!!******************', user)
 
                     initReactiveProperties(user);
-                    setUsers(u =>[...u, user])
+                    // setUsers([...use])
 
                 }
             })
