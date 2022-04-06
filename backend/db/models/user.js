@@ -1,6 +1,8 @@
 'use strict';
 const { Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const { v4: uuidv4 } = require('uuid');
+
 
 
 module.exports = (sequelize, DataTypes) => {
@@ -23,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [3, 256]
       }
+    },
+    privateChatRoomID: {
+      type: DataTypes.STRING,
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
@@ -55,8 +60,8 @@ module.exports = (sequelize, DataTypes) => {
 
 
 User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-  const { id, username, email } = this; // context will be the User instance
-  return { id, username, email };
+  const { id, username, email, privateChatRoomID } = this; // context will be the User instance
+  return { id, username, email, privateChatRoomID };
 };
 
 
@@ -92,7 +97,8 @@ User.signup = async function ({ username, email, password }) {
   const user = await User.create({
     username,
     email,
-    hashedPassword
+    hashedPassword,
+    privateChatRoomID: uuidv4()
   });
   return await User.scope('currentUser').findByPk(user.id);
 };

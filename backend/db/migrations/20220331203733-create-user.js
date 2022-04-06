@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      privateChatRoomID: {
+        type: Sequelize.STRING(256),
+        unique: true
+      },
       username: {
         type: Sequelize.STRING(30),
         allowNull: false,
