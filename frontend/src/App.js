@@ -5,7 +5,9 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import ChatApp from "./components/Chat/ChatApp";
+
+import { SocketProvider } from "./context/SocketProvider";
+// import ChatApp from "./components/Chat/ChatApp";
 
 
 
@@ -27,6 +29,14 @@ console.log(user, 'user@@@@@@@@@')
 // socket.on('message', message => {
 //   console.log(message)
 // })
+const chat = (
+  <SocketProvider user={user}>
+    <div>
+      {user?.username}
+      chat app
+    </div>
+  </SocketProvider>
+)
 
   return (
     <>
@@ -40,7 +50,8 @@ console.log(user, 'user@@@@@@@@@')
             <SignupFormPage />
           </Route>
           <Route path='/chat'>
-            <ChatApp user={user} />
+            {/* <ChatApp user={user} /> */}
+              {chat}
          </Route>
         </Switch>
       )}
