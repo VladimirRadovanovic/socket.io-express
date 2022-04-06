@@ -11,7 +11,9 @@ function Chat({ user }) {
     console.log(users, 'users))))))))))))')
 
     const [selectedMessages, setSelectedMessage] = useState([])
-    console.log(selectedMessages, 'compare messages')
+    const [fromUser, setFromUser] = useState(null)
+    const [toUser, setToUser] = useState(null)
+    // console.log(selectedMessages, toUser, 'compare messages')
     // console.log(message, 'message from user')
 
 
@@ -40,8 +42,9 @@ function Chat({ user }) {
 
 
     const onSelectUser = (user) => {
+
         setSelectedUser(user)
-        setSelectedMessage(user.messages)
+        setSelectedMessage(user?.messages)
         user.hasNewMessages = false
     }
 
@@ -142,8 +145,10 @@ function Chat({ user }) {
                     if (user !== selectedUser) {
                         user.hasNewMessages = true;
                     }
-                    console.log(user?.messages, 'mmmmmm******MMMMMMMMMMMMM')
+                    console.log(user?.messages, 'mmmmmm******MMMMMMMMMMMMM', user)
                     setSelectedMessage([...user?.messages])
+                    setFromUser(from)
+                    setToUser(to)
                     break;
                 }
             }
@@ -183,7 +188,7 @@ function Chat({ user }) {
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} />
+                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} fromUser={fromUser} toUser={toUser} />
             )
             }
         </div>
