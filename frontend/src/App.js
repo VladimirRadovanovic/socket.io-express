@@ -54,7 +54,8 @@ const chat = (
           (<Route path='/chat'>
             {/* <ChatApp user={user} /> */}
               {chat}
-         </Route>) : <Redirect to='/login' />}
+         </Route>) :
+         <Redirect to='/login' />}
         </Switch>
       )}
     </>

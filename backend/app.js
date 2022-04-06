@@ -100,27 +100,32 @@ app.use((err, _req, res, _next) => {
 });
 
 io.use((socket, next) => {
-    const sessionID = socket.handshake.auth.sessionID
-    if (sessionID) {
-        const session = sessionStore.findSession(sessionID)
-        console.log(session)
-        if (session) {
-            socket.sessionID = sessionID
-            socket.userID = session.userID
-            socket.username = session.username
-            return next()
-        }
-    }
+    // const sessionID = socket.handshake.auth.sessionID
+    // if (sessionID) {
+    //     const session = sessionStore.findSession(sessionID)
+    //     console.log(session)
+    //     if (session) {
+    //         socket.sessionID = sessionID
+    //         socket.userID = session.userID
+    //         socket.username = session.username
+    //         return next()
+    //     }
+    // }
 
-    const username = socket.handshake.auth.username;
-    console.log(username, sessionID, socket.username, socket.sessionID, socket.handshake.auth, 'dahdahdiuashdiah@@@@@@@@@')
-    if (!username) {
-        return next(new Error("invalid username"));
-    }
-    socket.sessionID = randomId()
-    socket.userID = randomId()
-    socket.username = username;
-    next();
+    // const username = socket.handshake.auth.username;
+    // console.log(username, 1, sessionID, 2, socket.username, 3, socket.sessionID, 4, socket.handshake.auth, 5, 'dahdahdiuashdiah@@@@@@@@@')
+    // if (!username) {
+    //     return next(new Error("invalid username"));
+    // }
+    // socket.sessionID = randomId()
+    // socket.userID = randomId()
+    // socket.username = username;
+    // next();
+    socket.sessionID = socket.handshake.auth.sessionID
+    socket.userID = socket.handshake.auth.userID
+    socket.username = socket.handshake.auth.username
+    console.log(socket, socket.sessionID, socket.username, socket.userID)
+    next()
 });
 
 
