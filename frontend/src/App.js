@@ -5,6 +5,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import { Redirect } from "react-router-dom";
 
 import { SocketProvider } from "./context/SocketProvider";
 // import ChatApp from "./components/Chat/ChatApp";
@@ -49,10 +50,11 @@ const chat = (
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path='/chat'>
+          { user ?
+          (<Route path='/chat'>
             {/* <ChatApp user={user} /> */}
               {chat}
-         </Route>
+         </Route>) : <Redirect to='/login' />}
         </Switch>
       )}
     </>

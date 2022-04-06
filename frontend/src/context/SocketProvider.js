@@ -14,7 +14,6 @@ export function SocketProvider({ user, children }) {
     useEffect(() => {
         const newSocket = io(
             'http://localhost:5000',
-            { autoConnect: false },
             { auth: { 'sessionID': user?.id, 'username': user?.username, 'userID': user?.privateChatRoomID } }
         );
         socket?.onAny((event, ...args) => {

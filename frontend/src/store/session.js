@@ -22,7 +22,7 @@ export const logout = () => async (dispatch) => {
       method: 'DELETE',
     });
     dispatch(removeUser());
-    localStorage.removeItem('sessionID')
+    // localStorage.removeItem('sessionID')
     return response;
   };
 
