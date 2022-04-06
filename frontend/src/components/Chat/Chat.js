@@ -17,30 +17,6 @@ function Chat({ user }) {
     // console.log(message, 'message from user')
 
 
-    // useEffect(() => {
-    //     socket.auth = { 'username': user?.username }
-    //     socket.connect()
-
-    //     return () => {
-    //         socket.disconnect()
-    //     }
-    // }, [])
-
-
-    // const onMessage = (e) => {
-    //     if(selectedUser) {
-    //         socket.emit('private message', {
-    //             content: message,
-    //             to: selectedUser.userID
-    //         })
-    //         selectedUser.messages.push({
-    //             content: message,
-    //             fromSelf: true
-    //         })
-    //     }
-    // }
-
-
     const onSelectUser = (user) => {
 
         setSelectedUser(user)
@@ -54,7 +30,7 @@ function Chat({ user }) {
         const initReactiveProperties = (user) => {
             // user.connected = true;
             console.log('reactive^^^^&&&&&&***************')
-            user.messages = [];
+            // user.messages = [];
             user.hasNewMessages = false;
         };
 
@@ -78,11 +54,15 @@ function Chat({ user }) {
 
         socket.on("users", (use) => {
             use.forEach(user => {
+                user.messages.forEach((message) => {
+                    message.fromSelf = message.from === socket.userID;
+                });
                 for (let i = 0; i < use.length; i++) {
                     console.log('in for each !!!!!!******************', user, use.length)
                     const existingUser = use[i]
                     if (existingUser.userID === user.userID) {
                         existingUser.connected = user.connected;
+                        existingUser.messages = user.messages;
                         initReactiveProperties(user);
                         // setUsers(u =>[...u, user])
                         return;
@@ -110,13 +90,13 @@ function Chat({ user }) {
             for (let i = 0; i < users.length; i++) {
                 const existingUser = users[i];
                 if (existingUser.userID === user.userID) {
-                  existingUser.connected = true;
-                  initReactiveProperties(user)
-                //   setUsers(u => [...u, user])
-                  console.log('in user connected!!!!!!!!!!!!!!!', user)
-                  return;
+                    existingUser.connected = true;
+                    initReactiveProperties(user)
+                    //   setUsers(u => [...u, user])
+                    console.log('in user connected!!!!!!!!!!!!!!!', user)
+                    return;
                 }
-              }
+            }
             initReactiveProperties(user)
             setUsers(u => [...u, user])
 
