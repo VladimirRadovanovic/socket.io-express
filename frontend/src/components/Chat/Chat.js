@@ -39,13 +39,13 @@ function Chat({ user, socket }) {
             user.hasNewMessages = false;
         };
 
-        socket.on('connect', () => {
-            users.forEach(user => {
-                if (user.self) {
-                    user.connected = true;
-                }
-            })
-        })
+        // socket.on('connect', () => {
+        //     users.forEach(user => {
+        //         if (user.self) {
+        //             user.connected = true;
+        //         }
+        //     })
+        // })
 
         // socket.on("disconnect", () => {
         //     users.forEach((user) => {
