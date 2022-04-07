@@ -232,10 +232,11 @@ io.on("connection", async(socket) => {
         const messages = await Message.findAll({
             where: {
                 // userId: socket.sessionID
-                [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
+                [Op.or]: [{[Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]}, {[Op.and]: [{from: user.user.privateChatRoomID}, {to: socket.userID}]}]
+                // [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
             }
         })
-        console.log(messages, user, socket.userID, 'selected user!!!!!!!!!')
+        console.log(messages, user.user.privateChatRoomID, 'to', socket.userID, 'from', 'selected user!!!!!!!!!')
         io.to(user.user.privateChatRoomID).to(socket.userID).emit("user selection", messages)
     })
 
