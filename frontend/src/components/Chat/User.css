@@ -14,12 +14,12 @@
     color: #92959e;
   }
 
-  .new-messages {
+  .new-message {
     color: white;
     background-color: red;
-    width: 20px;
+    width: 15px;
     border-radius: 5px;
     text-align: center;
     float: right;
-    margin-top: 10px;
+    /* margin-top: 10px; */
   }
