@@ -107,14 +107,18 @@ function Chat({ user, socket }) {
 
         })
 
-        socket.on("user disconnected", (id) => {
-            for (let i = 0; i < users.length; i++) {
-                const user = users[i];
-                if (user.userID === id) {
-                    user.connected = false;
-                    break;
-                }
-            }
+        socket.on("user disconnected", (users) => {
+            console.log('in disconectin sigle user', users, '******************')
+            // for (let i = 0; i < users.length; i++) {
+            //     const user = users[i];
+            //     console.log(user.connected, 'in user disconnected')
+            //     if (user.privateChatRoomID === id) {
+            //         user.connected = false;
+            //         break;
+            //     }
+            // }
+            // const filteredUsers = users.
+            setUsers([...users])
         });
 
         socket.on("private message", ({ content, from, to }) => {

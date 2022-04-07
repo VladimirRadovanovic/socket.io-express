@@ -143,7 +143,7 @@ io.on("connection", async(socket) => {
 
     socket.emit("session", {
         sessionID: socket.sessionID,
-        userID: socket.userID,
+        privateChatRoomID: socket.userID,
     });
 
     // join the "userID" room
@@ -187,8 +187,9 @@ io.on("connection", async(socket) => {
 
     // notify existing users
     socket.broadcast.emit("user connected", {
-        userID: socket.userID,
+        id: socket.sessionID,
         username: socket.username,
+        privateChatRoomID: socket.userID,
         connected: true,
         // messages: [],
     });
@@ -211,7 +212,8 @@ io.on("connection", async(socket) => {
 
         if (isDisconnected) {
           // notify other users
-          socket.broadcast.emit("user disconnected", socket.userID);
+
+
           // update the connection status of the session
         //   sessionStore.saveSession(socket.sessionID, {
         //     userID: socket.userID,
@@ -222,7 +224,10 @@ io.on("connection", async(socket) => {
             await user.update({
                 connected: false
             })
-            console.log(user, 'disconnecting')
+            const users = await User.findAll()
+            console.log("user disconnected", users, '$$$$$$$$$$$$$$$$$$$$')
+            socket.broadcast.emit("user disconnected", users);
+            // console.log(user, 'disconnecting')
         }
     });
 
