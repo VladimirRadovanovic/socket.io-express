@@ -18,13 +18,25 @@ function Chat({ user, socket }) {
     const [users, setUsers] = useState([])
     const [allMessages, setAllMessages] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
-    console.log(allMessages, 'users))))))))))))')
+
+    const [newMessage, setNewMessage] = useState(null)
+
+    const [messagedUser, setMessagedUser] = useState(null)
+    const [emitedMessage, setEmitedMessage] = useState(null)
+
 
     // const [selectedMessages, setSelectedMessage] = useState([])
 
     // const [fromUser, setFromUser] = useState(null)
     // const [toUser, setToUser] = useState(null)
     // console.log(selectedMessages, toUser, 'compare messages')
+    const findUser = (users) => {
+        const foundUser = users.find(u => u.privateChatRoomID === newMessage?.from)
+        console.log(foundUser, '***********!!!!!!!!!!!!!!!found user')
+        setMessagedUser(foundUser)
+        // return foundUser.privateChatRoomID
+
+    }
 
 
 
@@ -69,6 +81,27 @@ function Chat({ user, socket }) {
         //     });
         // });
 
+        socket.on("private message", (message, to) => {
+            console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+
+            // const msgs = messages.filter(message => (
+            //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
+            // ))
+            // console.log( msgs, 'messages and msgs!!!!!!!!!!')
+            // setSelectedMessage(msgs)
+            if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
+                // setSelectedMessage(pre => [...pre, message])
+                if(message.from === user?.privateChatRoomID) {
+                    console.log(message, 'rendering emit private message in message component')
+                    setNewMessage(message)
+                }
+            }
+            // findUser(users)
+        })
+        socket.on('new message', message => {
+            console.log('message i n new messag emite ', message,'1!!!!!!!!!!')
+            setEmitedMessage(message)
+        })
 
 
         socket.on("users", (use) => {
@@ -192,6 +225,7 @@ function Chat({ user, socket }) {
             socket.off("users");
             socket.off("user connected");
             socket.off("user disconnected");
+            socket.off('new message')
             // socket.off("private message");
             // socket.off("user selection");
         }
@@ -206,11 +240,11 @@ function Chat({ user, socket }) {
         <div>
             <div className="left-panel">
                 {users.map(user => (
-                    <User key={user.id} user={user} selected={selectedUser === user} select={onSelectUser} />
+                    <User newMessage={newMessage} key={user.id} user={user} selected={selectedUser === user} select={onSelectUser} users={users} messagedUser={messagedUser} newMsg={emitedMessage?.from === user?.privateChatRoomID} />
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} socket={socket} />
+                <MessagePanel user={selectedUser} socket={socket} setNewMessage={setNewMessage} findUser={findUser} users={users} />
             )
             }
         </div>

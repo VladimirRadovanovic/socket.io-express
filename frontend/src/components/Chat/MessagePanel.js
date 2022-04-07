@@ -6,20 +6,19 @@ import './MessagePanel.css'
 import { useEffect } from "react";
 import { useSocket } from "../../context/SocketProvider";
 
-function MessagePanel({ user, socket }) {
+function MessagePanel({ user, socket, setNewMessage, findUser, users }) {
     const [message, setMessage] = useState('')
     const [chatMessages, setChatMessages] = useState([])
     const [selectedMessages, setSelectedMessage] = useState([])
-    const [newMessage, setNewMessage] = useState(false)
+    // const [newMessage, setNewMessage] = useState(false)
     // const [length, setLength] = useState(user.messages.length)
-    console.log(newMessage, 'message new')
+    // console.log(newMessage, 'message new')
 
 
 
 
 
     // const socket = useSocket()
-
 
 
 
@@ -87,17 +86,19 @@ function MessagePanel({ user, socket }) {
             // console.log( msgs, 'messages and msgs!!!!!!!!!!')
             // setSelectedMessage(msgs)
             if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
-                if(message.from === user?.privateChatRoomID) {
-                    setNewMessage(true)
-                }
                 setSelectedMessage(pre => [...pre, message])
+                if(message.from === user?.privateChatRoomID) {
+                    console.log(message, 'rendering emit private message in message component')
+                    setNewMessage(message)
+                }
             }
+            // findUser(users)
         })
         return () => {
             socket.off("private message");
             socket.off("user selection");
         }
-    })
+    }, [])
 
     console.log(selectedMessages.length > 0,  selectedMessages[0]?.to ,user.privateChatRoomID , selectedMessages[0]?.from)
     return (

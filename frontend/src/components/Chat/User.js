@@ -5,9 +5,22 @@ import { useSelector } from "react-redux";
 import './User.css'
 import StatusIcon from "./StatusIcon";
 
-function User({ user, selected, select }) {
+function User({ user, selected, select, newMessage, messagedUser, newMsg }) {
     // use use selector to determine if the user is sessionUser
     const sessionUser = useSelector(state => state.session.user)
+    // const [newMessage, setNewMessage] = useState(null)
+    console.log(newMessage, sessionUser, user, 'has private message!!!!!!! rendering user component')
+    // useEffect(() => {
+    //     if(user.hasNewMessage) {
+    //         setNewMessage(user.hasNewMessage)
+    //     }
+    // }, [user.hasNewMessage])
+    // const findUser = () => {
+    //     const foundUser = users.find(u => u.privateChatRoomID === newMessage.from)
+    //     console.log(foundUser, '***********!!!!!!!!!!!!!!!found user')
+    //     return foundUser.privateChatRoomID
+
+    // }
 
     return (
         <div onClick={() => select(user)} className={selected ? 'selected' : ''}>
@@ -18,10 +31,10 @@ function User({ user, selected, select }) {
                 <span className="status">
                     <StatusIcon connected={user.connected ? "online" : "offline"} />
                 </span>
-                {user.hasNewMessage && (
-                    <div className="new-message">
+                {newMsg && (
+                    <span className="new-message">
                         !
-                    </div>
+                    </span>
                 )}
             </div>
         </div>

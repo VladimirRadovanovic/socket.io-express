@@ -221,6 +221,7 @@ io.on("connection", async(socket) => {
         console.log(to, 'to','++++++++', socket.userID, 'from', 'checking the emit**********!!!!!!!!!!!!!!!!')
 
         io.to(to).to(socket.userID).emit("private message", message, to)
+        socket.to(to).emit('new message', message)
     });
     socket.on("user selection", async(user) => {
 
