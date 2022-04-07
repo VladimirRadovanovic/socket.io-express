@@ -21,10 +21,10 @@ function App() {
   }, [dispatch]);
 
 const user = useSelector(state => state.session.user)
-console.log(user, 'user@@@@@@@@@')
+
 
 const socket = useSocket()
-console.log(socket, 'socket@@@@@@@@@@@@!!!!!!!!!!!')
+
 
 
 // const URL = "http://localhost:5000";

@@ -12,14 +12,14 @@ const Op = Sequelize.Op;
 
 
 
-const { InMemorySessionStore } = require('./sessionStore');
-const { InMemoryMessageStore } = require("./messageStore");
+// const { InMemorySessionStore } = require('./sessionStore');
+// const { InMemoryMessageStore } = require("./messageStore");
 
-const sessionStore = new InMemorySessionStore()
-const messageStore = new InMemoryMessageStore();
+// const sessionStore = new InMemorySessionStore()
+// const messageStore = new InMemoryMessageStore();
 
 
-const randomId = () => crypto.randomBytes(8).toString("hex");
+// const randomId = () => crypto.randomBytes(8).toString("hex");
 
 
 const http = require('http')
@@ -142,12 +142,12 @@ io.on("connection", async(socket) => {
     //     username: socket.username,
     //     connected: true,
     // });
-    socket.connected = true;
+    // socket.connected = true;
 
-    socket.emit("session", {
-        sessionID: socket.sessionID,
-        privateChatRoomID: socket.userID,
-    });
+    // socket.emit("session", {
+    //     sessionID: socket.sessionID,
+    //     privateChatRoomID: socket.userID,
+    // });
 
     // join the "userID" room
     socket.join(socket.userID);
@@ -217,7 +217,7 @@ io.on("connection", async(socket) => {
             message: content,
             userId: socket.sessionID
         })
-        console.log(message, ' on private message!!!!!!')
+
         // const messages = await Message.findAll({
         //     where: {
         //         // userId: socket.sessionID
@@ -228,7 +228,7 @@ io.on("connection", async(socket) => {
         io.to(to).to(socket.userID).emit("private message", message)
     });
     socket.on("user selection", async(user) => {
-        console.log( user, socket.userID, 'selected user!!!!!!!!!')
+
         const messages = await Message.findAll({
             where: {
                 // userId: socket.sessionID
@@ -236,7 +236,7 @@ io.on("connection", async(socket) => {
                 // [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
             }
         })
-        console.log(messages, user.user.privateChatRoomID, 'to', socket.userID, 'from', 'selected user!!!!!!!!!')
+
         io.to(user.user.privateChatRoomID).to(socket.userID).emit("user selection", messages)
     })
 
@@ -260,7 +260,7 @@ io.on("connection", async(socket) => {
                 connected: false
             })
             const users = await User.findAll()
-            console.log("user disconnected", users, '$$$$$$$$$$$$$$$$$$$$')
+
             socket.broadcast.emit("user disconnected", users);
             // console.log(user, 'disconnecting')
         }

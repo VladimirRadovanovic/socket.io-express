@@ -22,7 +22,7 @@ function Chat({ user, socket }) {
     const [fromUser, setFromUser] = useState(null)
     const [toUser, setToUser] = useState(null)
     // console.log(selectedMessages, toUser, 'compare messages')
-    console.log(selectedMessages, 'selected message from user')
+
 
 
     const onSelectUser = (user) => {
@@ -45,7 +45,7 @@ function Chat({ user, socket }) {
 
         const initReactiveProperties = (user) => {
             // user.connected = true;
-            console.log('reactive^^^^&&&&&&***************')
+
             // user.messages = [];
             user.hasNewMessages = false;
         };
@@ -98,7 +98,7 @@ function Chat({ user, socket }) {
                 if (a.username < b.username) return -1;
                 return a.username > b.username ? 1 : 0;
             });
-            console.log(use, 'useeeeeeeee')
+
             setUsers([...use])
         })
 
@@ -119,7 +119,7 @@ function Chat({ user, socket }) {
         })
 
         socket.on("user disconnected", (users) => {
-            console.log('in disconectin sigle user', users, '******************')
+
             // for (let i = 0; i < users.length; i++) {
             //     const user = users[i];
             //     console.log(user.connected, 'in user disconnected')

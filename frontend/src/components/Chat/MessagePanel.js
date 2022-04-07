@@ -10,13 +10,13 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
     const [message, setMessage] = useState('')
     const [chatMessages, setChatMessages] = useState([])
     // const [length, setLength] = useState(user.messages.length)
-    console.log(selectedMessages, 'selected messages')
 
-    console.log(user, toUser, 'comapre to user and dkajdas')
+
+
 
 
     // const socket = useSocket()
-    console.log(socket, 'message panel socket')
+
 
 
 

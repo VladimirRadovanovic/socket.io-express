@@ -8,7 +8,7 @@ import { useSocket } from "../../context/SocketProvider";
 function ChatApp({ user }) {
     const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
     const socket = useSocket()
-console.log(socket, 'socket@@@@@@@@@@@@')
+
     // const [errors, setErrors] = useState([])
     // useEffect(() => {
     //     const sessionID = localStorage.getItem("sessionID");
