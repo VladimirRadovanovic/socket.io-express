@@ -236,8 +236,8 @@ io.on("connection", async(socket) => {
                 // [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
             }
         })
-
-        io.to(user.user.privateChatRoomID).to(socket.userID).emit("user selection", messages)
+        console.log(user.user.privateChatRoomID, socket.userID, 'checking the emit**********!!!!!!!!!!!!!!!!')
+        io.to(socket.userID).emit("user selection", messages)
     })
 
     // notify users upon disconnection
