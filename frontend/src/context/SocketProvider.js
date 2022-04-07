@@ -20,7 +20,18 @@ export function SocketProvider({ user, children }) {
             console.log(event, args);
         });
         setSocket(newSocket)
-        return () => newSocket.close()
+        return () => {
+            // socket.on("disconnect", () => {
+            //     users.forEach((user) => {
+            //         if (user.self) {
+            //             user.connected = false;
+            //         }
+            //     });
+            // });
+
+            // newSocket.close()
+            newSocket.disconnect()
+        }
     }, [user])
 
     return (

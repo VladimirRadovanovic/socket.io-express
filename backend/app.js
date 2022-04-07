@@ -151,7 +151,7 @@ io.on("connection", async(socket) => {
 
     // fetch existing users
 
-    const users = [];
+    // const users = [];
 
     // const messagesPerUser = new Map();
     // messageStore.findMessagesForUser(socket.userID).forEach((message) => {
@@ -174,6 +174,12 @@ io.on("connection", async(socket) => {
     //     });
 
     //   });
+    const user = await User.findByPk(socket.sessionID)
+    const users = await User.findAll()
+    await user.update({
+        connected: true
+    })
+    // console.log(users)
     socket.emit("users", users);
 
     // notify existing users
@@ -181,7 +187,7 @@ io.on("connection", async(socket) => {
         userID: socket.userID,
         username: socket.username,
         connected: true,
-        messages: [],
+        // messages: [],
     });
 
     // forward the private message to the right recipient and to other tabs of the sender
@@ -199,15 +205,21 @@ io.on("connection", async(socket) => {
     socket.on("disconnect", async () => {
         const matchingSockets = await io.in(socket.userID).allSockets();
         const isDisconnected = matchingSockets.size === 0;
+        console.log(isDisconnected, 'dissconected')
         if (isDisconnected) {
           // notify other users
           socket.broadcast.emit("user disconnected", socket.userID);
           // update the connection status of the session
-          sessionStore.saveSession(socket.sessionID, {
-            userID: socket.userID,
-            username: socket.username,
-            connected: false,
-          });
+        //   sessionStore.saveSession(socket.sessionID, {
+        //     userID: socket.userID,
+        //     username: socket.username,
+        //     connected: false,
+        //   });
+            const user = await User.findByPk(socket.sessionID)
+            await user.update({
+                connected: false
+            })
+            console.log(user, 'single userrrrrr')
         }
     });
 

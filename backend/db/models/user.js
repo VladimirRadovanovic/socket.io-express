@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     privateChatRoomID: {
       type: DataTypes.STRING,
     },
+    connected: {
+      type: DataTypes.BOOLEAN
+    },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
@@ -60,8 +63,8 @@ module.exports = (sequelize, DataTypes) => {
 
 
 User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-  const { id, username, email, privateChatRoomID } = this; // context will be the User instance
-  return { id, username, email, privateChatRoomID };
+  const { id, username, email, privateChatRoomID, connected } = this; // context will be the User instance
+  return { id, username, email, privateChatRoomID, connected };
 };
 
 

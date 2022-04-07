@@ -42,13 +42,13 @@ function Chat({ user }) {
             })
         })
 
-        socket.on("disconnect", () => {
-            users.forEach((user) => {
-                if (user.self) {
-                    user.connected = false;
-                }
-            });
-        });
+        // socket.on("disconnect", () => {
+        //     users.forEach((user) => {
+        //         if (user.self) {
+        //             user.connected = false;
+        //         }
+        //     });
+        // });
 
 
 
