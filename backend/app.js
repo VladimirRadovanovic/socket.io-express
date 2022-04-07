@@ -126,7 +126,7 @@ io.use((socket, next) => {
     socket.userID = socket.handshake.auth.userID
     socket.username = socket.handshake.auth.username
     // socket.connected = socket.handshake.auth.connected
-    console.log(socket, socket.sessionID, socket.username, socket.userID, socket.connected)
+
     next()
 });
 
@@ -175,11 +175,14 @@ io.on("connection", async(socket) => {
 
     //   });
     const user = await User.findByPk(socket.sessionID)
-    const users = await User.findAll()
     await user.update({
         connected: true
     })
-    // console.log(users)
+    const users = await User.findAll()
+    // console.log(users[0], '**********************')
+    // users.forEach(user => {
+
+    // })
     socket.emit("users", users);
 
     // notify existing users
@@ -205,7 +208,7 @@ io.on("connection", async(socket) => {
     socket.on("disconnect", async () => {
         const matchingSockets = await io.in(socket.userID).allSockets();
         const isDisconnected = matchingSockets.size === 0;
-        console.log(isDisconnected, 'dissconected')
+
         if (isDisconnected) {
           // notify other users
           socket.broadcast.emit("user disconnected", socket.userID);
@@ -219,7 +222,7 @@ io.on("connection", async(socket) => {
             await user.update({
                 connected: false
             })
-            console.log(user, 'single userrrrrr')
+            console.log(user, 'disconnecting')
         }
     });
 
