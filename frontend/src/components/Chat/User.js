@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
 import './User.css'
 import StatusIcon from "./StatusIcon";
 
 function User({ user, selected, select }) {
-
+    // use use selector to determine if the user is sessionUser
 
     return (
-        <div onClick={() => select(user)} className={selected.toString()}>
+        <div onClick={() => select(user)} className={selected ? 'selected' : ''}>
             <div className="description">
-                <div className="name">
+                <span className="name">
                     {user.username} {user.self ? " (yourself)" : ""}
-                </div>
-                <div className="status">
+                </span>
+                <span className="status">
                     <StatusIcon connected={user.connected ? "online" : "offline"} />
-                </div>
+                </span>
                 {user.hasNewMessage && (
                     <div className="new-message">
                         !
@@ -27,4 +28,3 @@ function User({ user, selected, select }) {
 }
 
 export default User;
-

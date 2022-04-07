@@ -3,10 +3,18 @@
     width: 8px;
     border-radius: 50%;
     display: inline-block;
-    background-color: #e38968;
+
     margin-right: 6px;
   }
 
   .icon.connected {
     background-color: #86bb71;
+  }
+
+  .online {
+    background-color: #86bb71;
+  }
+
+  .offline {
+    background-color: #e38968;
   }
