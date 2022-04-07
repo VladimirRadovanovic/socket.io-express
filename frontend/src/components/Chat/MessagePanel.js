@@ -54,17 +54,20 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
         setMessage('')
     }
 
-    const displaySender = (message, index) => {
-        return (
-            index === 0 ||
-            message?.fromSelf !==
-            message?.fromSelf
-        )
-    }
+    // const displaySender = (message, index) => {
+    //     console.log(index,
+    //         selectedMessages[index -1]?.from,
+    //         selectedMessages[index]?.from, 'display sender', selectedMessages)
+    //     return (
+    //         index === 0 ||
+    //         selectedMessages[index -1]?.from !==
+    //         selectedMessages[index]?.from
+    //     )
+    // }
 
-    const isValid = () => {
-        return message.length > 0
-    }
+    // const isValid = () => {
+    //     return message.length > 0
+    // }
 
 
     return (
@@ -92,7 +95,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
                 value={message}
                 onChange={onMessage}
                 />
-                <button disabled={!isValid} className='send-button'>Send</button>
+                <button disabled={message.length === 0} className='send-button'>Send</button>
             </form>
         </div>
     )
