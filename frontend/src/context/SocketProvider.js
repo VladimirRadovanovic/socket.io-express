@@ -24,15 +24,7 @@ export function SocketProvider({ user, children }) {
         setSocket(newSocket)
 
         return () => {
-            // socket.on("disconnect", () => {
-            //     users.forEach((user) => {
-            //         if (user.self) {
-            //             user.connected = false;
-            //         }
-            //     });
-            // });
 
-            // newSocket.close()
             newSocket.disconnect()
         }
     }, [user])

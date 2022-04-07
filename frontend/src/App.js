@@ -26,19 +26,8 @@ const user = useSelector(state => state.session.user)
 const socket = useSocket()
 
 
-
-// const URL = "http://localhost:5000";
-// const socket = io();
-
-// socket.on('message', message => {
-//   console.log(message)
-// })
 const chat = (
   <SocketProvider user={user}>
-    {/* <div>
-      {user?.username}
-      chat app
-    </div> */}
     <ChatApp user={user} />
   </SocketProvider>
 )
@@ -56,7 +45,6 @@ const chat = (
           </Route>
           { user ?
           (<Route path='/chat'>
-            {/* <ChatApp user={user} /> */}
               {chat}
          </Route>) :
          <Redirect to='/login' />}
