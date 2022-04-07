@@ -28,10 +28,14 @@ function Chat({ user, socket }) {
     const onSelectUser = (user) => {
 
         setSelectedUser(user)
-        const userMessages = allMessages.filter(message => (
-            user.privateChatRoomID === message.from || selectedUser.privateChatRoomID === message.to
-        ))
-        setSelectedMessage(userMessages)
+        // const userMessages = allMessages.filter(message => (
+        //     user.privateChatRoomID === message.from || selectedUser.privateChatRoomID === message.to
+        // ))
+        socket.emit('user selection', {
+            user,
+            to: user.privateChatRoomID
+        })
+        // setSelectedMessage(userMessages)
         user.hasNewMessages = false
     }
 
@@ -172,6 +176,10 @@ function Chat({ user, socket }) {
             // save the ID of the user
             // socket.userID = userID;
         // });
+        socket.on('user selection', messages => {
+            console.log(messages, 'user selected messages')
+            setSelectedMessage(messages)
+        })
 
         return () => {
             socket.off("connect");
@@ -180,6 +188,7 @@ function Chat({ user, socket }) {
             socket.off("user connected");
             socket.off("user disconnected");
             socket.off("private message");
+            socket.off("user selection");
         }
     }, [users, user])
 

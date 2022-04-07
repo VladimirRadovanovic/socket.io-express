@@ -227,6 +227,17 @@ io.on("connection", async(socket) => {
         // console.log(messages, to, socket.userID, 'all messages!!!!')
         io.to(to).to(socket.userID).emit("private message", message)
     });
+    socket.on("user selection", async(user) => {
+        console.log( user, socket.userID, 'selected user!!!!!!!!!')
+        const messages = await Message.findAll({
+            where: {
+                // userId: socket.sessionID
+                [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
+            }
+        })
+        console.log(messages, user, socket.userID, 'selected user!!!!!!!!!')
+        io.to(user.user.privateChatRoomID).to(socket.userID).emit("user selection", messages)
+    })
 
     // notify users upon disconnection
     socket.on("disconnect", async () => {
