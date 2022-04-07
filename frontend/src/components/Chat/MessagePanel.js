@@ -69,14 +69,14 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
     //     return message.length > 0
     // }
 
-
+    console.log(selectedMessages.length > 0,  selectedMessages[0]?.to ,user.privateChatRoomID , selectedMessages[0]?.from)
     return (
         <div className="right-panel">
             <div className="header">
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
             <ul className="messages">
-                {selectedMessages?.map((message, index) => (
+                { selectedMessages?.map((message, index) => (
                     <li className="message" key={index}>
                             {(
                                 <div className="sender">

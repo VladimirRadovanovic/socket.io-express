@@ -5,21 +5,14 @@ const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
-const crypto = require("crypto");
+
 const { User, Message } = require('./db/models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 
 
-// const { InMemorySessionStore } = require('./sessionStore');
-// const { InMemoryMessageStore } = require("./messageStore");
 
-// const sessionStore = new InMemorySessionStore()
-// const messageStore = new InMemoryMessageStore();
-
-
-// const randomId = () => crypto.randomBytes(8).toString("hex");
 
 
 const http = require('http')
@@ -225,7 +218,9 @@ io.on("connection", async(socket) => {
         //     }
         // })
         // console.log(messages, to, socket.userID, 'all messages!!!!')
-        io.to(to).to(socket.userID).emit("private message", message)
+        console.log(to, 'to','++++++++', socket.userID, 'from', 'checking the emit**********!!!!!!!!!!!!!!!!')
+
+        io.to(to).to(socket.userID).emit("private message", message, to)
     });
     socket.on("user selection", async(user) => {
 
@@ -236,7 +231,7 @@ io.on("connection", async(socket) => {
                 // [Op.and]: [{from: socket.userID}, {to: user.user.privateChatRoomID}]
             }
         })
-        console.log(user.user.privateChatRoomID, socket.userID, 'checking the emit**********!!!!!!!!!!!!!!!!')
+        // console.log(user.user.privateChatRoomID,'++++++++', socket.userID, 'checking the emit**********!!!!!!!!!!!!!!!!')
         io.to(socket.userID).emit("user selection", messages)
     })
 

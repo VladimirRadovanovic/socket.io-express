@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 import socket from "../../socket";
 import Chat from "./Chat";
-import SelectUsername from "./SelectUsername";
+
 import { useSocket } from "../../context/SocketProvider";
 
 function ChatApp({ user }) {
-    const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
+    // const [usernameAlreadySelected, setUsernameAlreadySelected] = useState(false)
     const socket = useSocket()
 
     // const [errors, setErrors] = useState([])
@@ -47,13 +47,13 @@ function ChatApp({ user }) {
     //     socket.connect()
     // }
 
-    const setUsernameFalse = () => {
-        setUsernameAlreadySelected(false)
-    }
+    // const setUsernameFalse = () => {
+    //     setUsernameAlreadySelected(false)
+    // }
 
-    const setUsernameTrue = () => {
-        setUsernameAlreadySelected(true)
-    }
+    // const setUsernameTrue = () => {
+    //     setUsernameAlreadySelected(true)
+    // }
 
     // // Need to restructure!!!!!!
     // useEffect(() => {

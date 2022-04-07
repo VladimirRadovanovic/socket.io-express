@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // import socket from "../../socket";
 import User from "./User";
 import MessagePanel from "./MessagePanel";
 import './Chat.css'
-import { useSocket } from "../../context/SocketProvider";
+
 
 
 
@@ -12,6 +13,8 @@ function Chat({ user, socket }) {
     // const socket = useSocket()
 //     const socket = useSocket()
 // console.log(socket, 'socket@@@@@@@@@@@@')
+
+
     const [users, setUsers] = useState([])
     const [allMessages, setAllMessages] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
@@ -155,16 +158,18 @@ function Chat({ user, socket }) {
 
         // });
 
-        socket.on("private message", message => {
-            console.log(message, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+        socket.on("private message", (message, to) => {
+            console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
 
             // const msgs = messages.filter(message => (
             //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
             // ))
             // console.log( msgs, 'messages and msgs!!!!!!!!!!')
             // setSelectedMessage(msgs)
+            if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
 
-            setSelectedMessage(pre => [...pre, message])
+                setSelectedMessage(pre => [...pre, message])
+            }
         })
 
         // socket.on("session", ({ sessionID, userID }) => {
