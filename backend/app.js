@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const crypto = require("crypto");
 const { User, Message } = require('./db/models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 
 const { InMemorySessionStore } = require('./sessionStore');
@@ -126,7 +129,7 @@ io.use((socket, next) => {
     socket.userID = socket.handshake.auth.userID
     socket.username = socket.handshake.auth.username
     // socket.connected = socket.handshake.auth.connected
-    console.log(socket.userID, socket.username)
+
     next()
 });
 
@@ -206,8 +209,8 @@ io.on("connection", async(socket) => {
         //   }
         // socket.to(to).to(socket.userID).emit("private message", message);
         // messageStore.saveMessage(message);
-        console.log(socket)
-        console.log(to, socket.userID, content, socket.sessionID, '******D*****************')
+
+
         const message = await Message.create({
             from: socket.userID,
             to,
@@ -215,7 +218,14 @@ io.on("connection", async(socket) => {
             userId: socket.sessionID
         })
         console.log(message, ' on private message!!!!!!')
-        socket.to(to).to(socket.userID).emit("private message", message)
+        const messages = await Message.findAll({
+            where: {
+                // userId: socket.sessionID
+                [Op.and]: [{from: socket.userID}, {to}]
+            }
+        })
+        console.log(messages, to, socket.userID, 'all messages!!!!')
+        io.to(to).to(socket.userID).emit("private message", messages)
     });
 
     // notify users upon disconnection

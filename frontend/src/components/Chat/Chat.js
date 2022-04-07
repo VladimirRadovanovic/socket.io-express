@@ -6,25 +6,32 @@ import MessagePanel from "./MessagePanel";
 import './Chat.css'
 import { useSocket } from "../../context/SocketProvider";
 
+
+
 function Chat({ user, socket }) {
     // const socket = useSocket()
 //     const socket = useSocket()
 // console.log(socket, 'socket@@@@@@@@@@@@')
     const [users, setUsers] = useState([])
+    const [allMessages, setAllMessages] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
-    console.log(users, 'users))))))))))))')
+    console.log(allMessages, 'users))))))))))))')
 
     const [selectedMessages, setSelectedMessage] = useState([])
+
     const [fromUser, setFromUser] = useState(null)
     const [toUser, setToUser] = useState(null)
     // console.log(selectedMessages, toUser, 'compare messages')
-    // console.log(message, 'message from user')
+    console.log(selectedMessages, 'selected message from user')
 
 
     const onSelectUser = (user) => {
 
         setSelectedUser(user)
-        setSelectedMessage(user?.messages)
+        const userMessages = allMessages.filter(message => (
+            user.privateChatRoomID === message.from || selectedUser.privateChatRoomID === message.to
+        ))
+        setSelectedMessage(userMessages)
         user.hasNewMessages = false
     }
 
@@ -121,38 +128,50 @@ function Chat({ user, socket }) {
             setUsers([...users])
         });
 
-        socket.on("private message", ({ content, from, to }) => {
+        // socket.on("private message", ({ content, from, to }) => {
 
-            for (let i = 0; i < users.length; i++) {
-                const user = users[i];
-                const fromSelf = socket.userID === from
-                if (user.userID === (fromSelf ? to : from)) {
-                    user.messages.push({
-                        content,
-                        fromSelf
-                    });
-                    if (user !== selectedUser) {
-                        user.hasNewMessages = true;
-                    }
-                    console.log(user?.messages, 'mmmmmm******MMMMMMMMMMMMM', user)
-                    setSelectedMessage([...user?.messages])
-                    setFromUser(from)
-                    setToUser(to)
-                    break;
-                }
-            }
+        //     for (let i = 0; i < users.length; i++) {
+        //         const user = users[i];
+        //         const fromSelf = socket.userID === from
+        //         if (user.userID === (fromSelf ? to : from)) {
+        //             user.messages.push({
+        //                 content,
+        //                 fromSelf
+        //             });
+        //             if (user !== selectedUser) {
+        //                 user.hasNewMessages = true;
+        //             }
+        //             console.log(user?.messages, 'mmmmmm******MMMMMMMMMMMMM', user)
+        //             setSelectedMessage([...user?.messages])
+        //             setFromUser(from)
+        //             setToUser(to)
+        //             break;
+        //         }
+        //     }
 
-        });
+        // });
 
-        socket.on("session", ({ sessionID, userID }) => {
+        socket.on("private message", messages => {
+            console.log(messages, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+
+            // const msgs = messages.filter(message => (
+            //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
+            // ))
+            // console.log( msgs, 'messages and msgs!!!!!!!!!!')
+            // setSelectedMessage(msgs)
+
+            setAllMessages(messages)
+        })
+
+        // socket.on("session", ({ sessionID, userID }) => {
             // attach the session ID to the next reconnection attempts
             // socket.auth = { sessionID };
             // store it in the localStorage
             // console.log(sessionID, 'sessionID')
             // localStorage.setItem("sessionID", sessionID);
             // save the ID of the user
-            socket.userID = userID;
-        });
+            // socket.userID = userID;
+        // });
 
         return () => {
             socket.off("connect");
