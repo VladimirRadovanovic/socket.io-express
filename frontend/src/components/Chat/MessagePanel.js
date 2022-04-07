@@ -57,8 +57,8 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
     const displaySender = (message, index) => {
         return (
             index === 0 ||
-            user?.messages[index - 1]?.fromSelf !==
-            user?.messages[index]?.fromSelf
+            message?.fromSelf !==
+            message?.fromSelf
         )
     }
 
@@ -72,19 +72,19 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
             <div className="header">
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
-            {/* <ul className="messages">
-                {(user.userID === fromUser || selectedMessages[0]?.fromSelf) && selectedMessages?.map((message, index) => (
+            <ul className="messages">
+                {selectedMessages?.map((message, index) => (
                     <li className="message" key={index}>
-                            {displaySender(message, index) && (
+                            {(
                                 <div className="sender">
-                                    {message.fromSelf ? "(yourself)" : user.username}
+                                    {message.to === user.privateChatRoomID ? "(yourself)" : user.username}
                                 </div>
                             )}
 
-                            {message.content}
+                            {message.message}
                     </li>
                 ))}
-            </ul> */}
+            </ul>
             <form onSubmit={onSubmit} className="form">
                 <textarea
                 className="input"

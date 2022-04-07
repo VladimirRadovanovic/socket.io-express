@@ -218,14 +218,14 @@ io.on("connection", async(socket) => {
             userId: socket.sessionID
         })
         console.log(message, ' on private message!!!!!!')
-        const messages = await Message.findAll({
-            where: {
-                // userId: socket.sessionID
-                [Op.and]: [{from: socket.userID}, {to}]
-            }
-        })
-        console.log(messages, to, socket.userID, 'all messages!!!!')
-        io.to(to).to(socket.userID).emit("private message", messages)
+        // const messages = await Message.findAll({
+        //     where: {
+        //         // userId: socket.sessionID
+        //         [Op.or]: [{from: socket.userID}, {to}]
+        //     }
+        // })
+        // console.log(messages, to, socket.userID, 'all messages!!!!')
+        io.to(to).to(socket.userID).emit("private message", message)
     });
 
     // notify users upon disconnection

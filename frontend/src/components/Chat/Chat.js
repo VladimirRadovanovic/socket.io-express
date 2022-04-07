@@ -151,8 +151,8 @@ function Chat({ user, socket }) {
 
         // });
 
-        socket.on("private message", messages => {
-            console.log(messages, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+        socket.on("private message", message => {
+            console.log(message, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
 
             // const msgs = messages.filter(message => (
             //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
@@ -160,7 +160,7 @@ function Chat({ user, socket }) {
             // console.log( msgs, 'messages and msgs!!!!!!!!!!')
             // setSelectedMessage(msgs)
 
-            setAllMessages(messages)
+            setSelectedMessage(pre => [...pre, message])
         })
 
         // socket.on("session", ({ sessionID, userID }) => {
