@@ -186,13 +186,16 @@ io.on("connection", async(socket) => {
     socket.emit("users", users);
 
     // notify existing users
-    socket.broadcast.emit("user connected", {
-        id: socket.sessionID,
-        username: socket.username,
-        privateChatRoomID: socket.userID,
-        connected: true,
-        // messages: [],
-    });
+    socket.broadcast.emit("user connected",
+    // {
+    //     id: socket.sessionID,
+    //     username: socket.username,
+    //     privateChatRoomID: socket.userID,
+    //     connected: true,
+    //     // messages: [],
+    // }
+        users
+    );
 
     // forward the private message to the right recipient and to other tabs of the sender
     socket.on("private message", ({ content, to }) => {

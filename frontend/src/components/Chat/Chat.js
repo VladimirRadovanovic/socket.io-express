@@ -58,7 +58,7 @@ function Chat({ user, socket }) {
 
 
         socket.on("users", (use) => {
-            use.forEach(user => {
+            // use.forEach(user => {
                 // user.messages.forEach((message) => {
                 //     message.fromSelf = message.from === socket.userID;
                 // });
@@ -79,7 +79,7 @@ function Chat({ user, socket }) {
                 //     // setUsers([...use])
 
                 // }
-            })
+            // })
 
             use = use.sort((a, b) => {
                 if (a.self) return -1;
@@ -91,19 +91,19 @@ function Chat({ user, socket }) {
             setUsers([...use])
         })
 
-        socket.on('user connected', user => {
-            for (let i = 0; i < users.length; i++) {
-                const existingUser = users[i];
-                if (existingUser.userID === user.userID) {
-                    existingUser.connected = true;
-                    initReactiveProperties(user)
-                    //   setUsers(u => [...u, user])
-                    console.log('in user connected!!!!!!!!!!!!!!!', user)
-                    return;
-                }
-            }
-            initReactiveProperties(user)
-            setUsers(u => [...u, user])
+        socket.on('user connected', users => {
+            // for (let i = 0; i < users.length; i++) {
+            //     const existingUser = users[i];
+            //     if (existingUser.userID === user.userID) {
+            //         existingUser.connected = true;
+            //         initReactiveProperties(user)
+            //         //   setUsers(u => [...u, user])
+            //         console.log('in user connected!!!!!!!!!!!!!!!', user)
+            //         return;
+            //     }
+            // }
+            // initReactiveProperties(user)
+            setUsers([...users])
 
         })
 
