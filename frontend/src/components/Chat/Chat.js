@@ -169,7 +169,7 @@ function Chat({ user, socket }) {
         <div>
             <div className="left-panel">
                 {users.map(user => (
-                    <User key={user.userID} user={user} selected={selectedUser === user} select={onSelectUser} />
+                    <User key={user.id} user={user} selected={selectedUser === user} select={onSelectUser} />
                 ))}
             </div>
             {selectedUser && (

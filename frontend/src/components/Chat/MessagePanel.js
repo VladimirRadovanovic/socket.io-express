@@ -23,7 +23,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
 
     // console.log(user?.messages, ' selected user messages')
 
-    
+
 
     const onMessage = (e) => {
         setMessage(e.target.value)
@@ -68,7 +68,7 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
             <div className="header">
                 <StatusIcon connected={user.connected} /> {user.username}
             </div>
-            <ul className="messages">
+            {/* <ul className="messages">
                 {(user.userID === fromUser || selectedMessages[0]?.fromSelf) && selectedMessages?.map((message, index) => (
                     <li className="message" key={index}>
                             {displaySender(message, index) && (
@@ -76,11 +76,11 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
                                     {message.fromSelf ? "(yourself)" : user.username}
                                 </div>
                             )}
-                            {/* {length} */}
+
                             {message.content}
                     </li>
                 ))}
-            </ul>
+            </ul> */}
             <form onSubmit={onSubmit} className="form">
                 <textarea
                 className="input"
