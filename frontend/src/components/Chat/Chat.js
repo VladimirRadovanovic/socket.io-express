@@ -30,13 +30,13 @@ function Chat({ user, socket }) {
     // const [fromUser, setFromUser] = useState(null)
     // const [toUser, setToUser] = useState(null)
     // console.log(selectedMessages, toUser, 'compare messages')
-    const findUser = (users) => {
-        const foundUser = users.find(u => u.privateChatRoomID === newMessage?.from)
-        console.log(foundUser, '***********!!!!!!!!!!!!!!!found user')
-        setMessagedUser(foundUser)
-        // return foundUser.privateChatRoomID
+    // const findUser = (users) => {
+    //     const foundUser = users.find(u => u.privateChatRoomID === newMessage?.from)
+    //     console.log(foundUser, '***********!!!!!!!!!!!!!!!found user')
+    //     setMessagedUser(foundUser)
+    //     // return foundUser.privateChatRoomID
 
-    }
+    // }
 
 
 
@@ -51,7 +51,10 @@ function Chat({ user, socket }) {
             to: user.privateChatRoomID
         })
         // setSelectedMessage(userMessages)
-        user.hasNewMessages = false
+        // user.hasNewMessages = false
+        if(emitedMessage?.from === user?.privateChatRoomID) {
+            setEmitedMessage(null)
+        }
     }
 
 
@@ -244,7 +247,7 @@ function Chat({ user, socket }) {
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} socket={socket} setNewMessage={setNewMessage} findUser={findUser} users={users} />
+                <MessagePanel user={selectedUser} socket={socket} setNewMessage={setNewMessage} users={users} />
             )
             }
         </div>
