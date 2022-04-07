@@ -9,7 +9,8 @@ export function useSocket() {
 
 export function SocketProvider({ user, children }) {
 
-    const [socket, setSocket] = useState(null)
+    const [socket, setSocket] = useState()
+    console.log(socket, 'socket conn')
 
     useEffect(() => {
         const newSocket = io(
@@ -19,7 +20,9 @@ export function SocketProvider({ user, children }) {
         socket?.onAny((event, ...args) => {
             console.log(event, args);
         });
+
         setSocket(newSocket)
+
         return () => {
             // socket.on("disconnect", () => {
             //     users.forEach((user) => {

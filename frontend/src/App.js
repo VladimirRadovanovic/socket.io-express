@@ -7,8 +7,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { Redirect } from "react-router-dom";
 
-import { SocketProvider } from "./context/SocketProvider";
-// import ChatApp from "./components/Chat/ChatApp";
+import { SocketProvider, useSocket } from "./context/SocketProvider";
+import ChatApp from "./components/Chat/ChatApp";
 
 
 
@@ -23,6 +23,9 @@ function App() {
 const user = useSelector(state => state.session.user)
 console.log(user, 'user@@@@@@@@@')
 
+const socket = useSocket()
+console.log(socket, 'socket@@@@@@@@@@@@!!!!!!!!!!!')
+
 
 // const URL = "http://localhost:5000";
 // const socket = io();
@@ -32,10 +35,11 @@ console.log(user, 'user@@@@@@@@@')
 // })
 const chat = (
   <SocketProvider user={user}>
-    <div>
+    {/* <div>
       {user?.username}
       chat app
-    </div>
+    </div> */}
+    <ChatApp user={user} />
   </SocketProvider>
 )
 

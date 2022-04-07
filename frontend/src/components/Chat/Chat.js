@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 
-import socket from "../../socket";
+// import socket from "../../socket";
 import User from "./User";
 import MessagePanel from "./MessagePanel";
 import './Chat.css'
+import { useSocket } from "../../context/SocketProvider";
 
-function Chat({ user }) {
+function Chat({ user, socket }) {
+    // const socket = useSocket()
+//     const socket = useSocket()
+// console.log(socket, 'socket@@@@@@@@@@@@')
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
     console.log(users, 'users))))))))))))')
@@ -27,6 +31,7 @@ function Chat({ user }) {
 
 
     useEffect(() => {
+
         const initReactiveProperties = (user) => {
             // user.connected = true;
             console.log('reactive^^^^&&&&&&***************')
@@ -54,26 +59,26 @@ function Chat({ user }) {
 
         socket.on("users", (use) => {
             use.forEach(user => {
-                user.messages.forEach((message) => {
-                    message.fromSelf = message.from === socket.userID;
-                });
-                for (let i = 0; i < use.length; i++) {
-                    console.log('in for each !!!!!!******************', user, use.length)
-                    const existingUser = use[i]
-                    if (existingUser.userID === user.userID) {
-                        existingUser.connected = user.connected;
-                        existingUser.messages = user.messages;
-                        initReactiveProperties(user);
-                        // setUsers(u =>[...u, user])
-                        return;
-                    }
-                    user.self = user.userID === socket.userID;
-                    console.log('in for each2 !!!!!!******************', user)
+                // user.messages.forEach((message) => {
+                //     message.fromSelf = message.from === socket.userID;
+                // });
+                // for (let i = 0; i < use.length; i++) {
+                //     console.log('in for each !!!!!!******************', user, use.length)
+                //     const existingUser = use[i]
+                //     if (existingUser.userID === user.userID) {
+                //         existingUser.connected = user.connected;
+                //         existingUser.messages = user.messages;
+                //         initReactiveProperties(user);
+                //         // setUsers(u =>[...u, user])
+                //         return;
+                //     }
+                //     user.self = user.userID === socket.userID;
+                //     console.log('in for each2 !!!!!!******************', user)
 
-                    initReactiveProperties(user);
-                    // setUsers([...use])
+                //     initReactiveProperties(user);
+                //     // setUsers([...use])
 
-                }
+                // }
             })
 
             use = use.sort((a, b) => {
