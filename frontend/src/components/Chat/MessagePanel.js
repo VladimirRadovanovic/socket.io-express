@@ -4,11 +4,9 @@ import { useState } from "react";
 import StatusIcon from "./StatusIcon";
 import './MessagePanel.css'
 import { useEffect } from "react";
-import { useSocket } from "../../context/SocketProvider";
 
 function MessagePanel({ user, socket, removeNotification  }) {
     const [message, setMessage] = useState('')
-    const [chatMessages, setChatMessages] = useState([])
     const [selectedMessages, setSelectedMessage] = useState([])
 
 
@@ -37,7 +35,6 @@ function MessagePanel({ user, socket, removeNotification  }) {
     useEffect(() => {
 
         socket.on('user selection', messages => {
-            console.log(messages, 'user selected messages')
             setSelectedMessage(messages)
         })
 
@@ -57,7 +54,6 @@ function MessagePanel({ user, socket, removeNotification  }) {
         }
     }, [])
 
-    console.log(selectedMessages.length > 0,  selectedMessages[0]?.to ,user.privateChatRoomID , selectedMessages[0]?.from)
     return (
         <div className="right-panel">
             <div className="header">

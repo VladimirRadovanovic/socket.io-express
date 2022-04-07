@@ -44,19 +44,16 @@ function Chat({ user, socket }) {
 
 
         socket.on("private message", (message, to) => {
-            console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
 
             if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
 
                 if(message.from === user?.privateChatRoomID) {
-                    console.log(message, 'rendering emit private message in message component')
                     // setNewMessage(message)
                 }
             }
 
         })
         socket.on('new message', message => {
-            console.log('message i n new messag emite ', message,'1!!!!!!!!!!')
             setEmittedMessage(message)
         })
 
