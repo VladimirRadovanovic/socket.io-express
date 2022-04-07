@@ -1,19 +1,22 @@
 import { useState } from "react";
 
-import socket from "../../socket";
+// import socket from "../../socket";
 import StatusIcon from "./StatusIcon";
 import './MessagePanel.css'
 import { useEffect } from "react";
+import { useSocket } from "../../context/SocketProvider";
 
-function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, toUser }) {
+function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, toUser, socket }) {
     const [message, setMessage] = useState('')
+    const [chatMessages, setChatMessages] = useState([])
     // const [length, setLength] = useState(user.messages.length)
     console.log(selectedMessages, 'selected messages')
 
     console.log(user, toUser, 'comapre to user and dkajdas')
 
 
-
+    // const socket = useSocket()
+    console.log(socket, 'message panel socket')
 
 
 
@@ -31,21 +34,22 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
 
     const onSubmit = (e) => {
         e.preventDefault()
+
         if(user) {
-            console.log(user, 'user')
+            // console.log(user, 'user')
             socket.emit('private message', {
                 content: message,
-                to: user.userID
+                to: user.privateChatRoomID
             })
-            user?.messages?.push({
-                content: message,
-                fromSelf: true
-            })
+            // user?.messages?.push({
+            //     content: message,
+            //     fromSelf: true
+            // })
             // setSentMessages(user?.messages)
             // setSelectedMessage(m => [...m, {content: message, fromSelf: true}])
         }
-        console.log(user?.messages, 'messages user')
-        setSelectedMessage([...user?.messages])
+        // console.log(user?.messages, 'messages user')
+        // setChatMessages(prevM => [...prevM, ])
 
         setMessage('')
     }

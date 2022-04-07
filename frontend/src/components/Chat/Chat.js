@@ -146,10 +146,10 @@ function Chat({ user, socket }) {
 
         socket.on("session", ({ sessionID, userID }) => {
             // attach the session ID to the next reconnection attempts
-            socket.auth = { sessionID };
+            // socket.auth = { sessionID };
             // store it in the localStorage
             // console.log(sessionID, 'sessionID')
-            localStorage.setItem("sessionID", sessionID);
+            // localStorage.setItem("sessionID", sessionID);
             // save the ID of the user
             socket.userID = userID;
         });
@@ -177,7 +177,7 @@ function Chat({ user, socket }) {
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} fromUser={fromUser} toUser={toUser} />
+                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} fromUser={fromUser} toUser={toUser} socket={socket} />
             )
             }
         </div>

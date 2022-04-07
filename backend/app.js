@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 const crypto = require("crypto");
-const { User } = require('./db/models');
+const { User, Message } = require('./db/models');
 
 
 const { InMemorySessionStore } = require('./sessionStore');
@@ -126,7 +126,7 @@ io.use((socket, next) => {
     socket.userID = socket.handshake.auth.userID
     socket.username = socket.handshake.auth.username
     // socket.connected = socket.handshake.auth.connected
-
+    console.log(socket.userID, socket.username)
     next()
 });
 
@@ -198,14 +198,24 @@ io.on("connection", async(socket) => {
     );
 
     // forward the private message to the right recipient and to other tabs of the sender
-    socket.on("private message", ({ content, to }) => {
-        const message = {
-            content,
+    socket.on("private message", async({ content, to }) => {
+        // const message = {
+        //     content,
+        //     from: socket.userID,
+        //     to,
+        //   }
+        // socket.to(to).to(socket.userID).emit("private message", message);
+        // messageStore.saveMessage(message);
+        console.log(socket)
+        console.log(to, socket.userID, content, socket.sessionID, '******D*****************')
+        const message = await Message.create({
             from: socket.userID,
             to,
-          }
-        socket.to(to).to(socket.userID).emit("private message", message);
-        messageStore.saveMessage(message);
+            message: content,
+            userId: socket.sessionID
+        })
+        console.log(message, ' on private message!!!!!!')
+        socket.to(to).to(socket.userID).emit("private message", message)
     });
 
     // notify users upon disconnection

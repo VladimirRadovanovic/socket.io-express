@@ -10,7 +10,7 @@ export function useSocket() {
 export function SocketProvider({ user, children }) {
 
     const [socket, setSocket] = useState()
-    console.log(socket, 'socket conn')
+    console.log(socket, user.username, user.privateChatRoomID, 'socket conn')
 
     useEffect(() => {
         const newSocket = io(
