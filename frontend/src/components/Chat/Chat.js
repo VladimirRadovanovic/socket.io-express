@@ -22,7 +22,7 @@ function Chat({ user, socket }) {
     const [newMessage, setNewMessage] = useState(null)
 
     const [messagedUser, setMessagedUser] = useState(null)
-    const [emitedMessage, setEmitedMessage] = useState(null)
+    const [emittedMessage, setEmittedMessage] = useState(null)
 
 
     // const [selectedMessages, setSelectedMessage] = useState([])
@@ -37,7 +37,11 @@ function Chat({ user, socket }) {
     //     // return foundUser.privateChatRoomID
 
     // }
-
+    const removeNotification = (user, msgInput) => {
+        if(emittedMessage?.from === user?.privateChatRoomID && msgInput.length > 0) {
+            setEmittedMessage(null)
+        }
+    }
 
 
     const onSelectUser = (user) => {
@@ -52,8 +56,8 @@ function Chat({ user, socket }) {
         })
         // setSelectedMessage(userMessages)
         // user.hasNewMessages = false
-        if(emitedMessage?.from === user?.privateChatRoomID) {
-            setEmitedMessage(null)
+        if(emittedMessage?.from === user?.privateChatRoomID) {
+            setEmittedMessage(null)
         }
     }
 
@@ -103,7 +107,7 @@ function Chat({ user, socket }) {
         })
         socket.on('new message', message => {
             console.log('message i n new messag emite ', message,'1!!!!!!!!!!')
-            setEmitedMessage(message)
+            setEmittedMessage(message)
         })
 
 
@@ -243,11 +247,11 @@ function Chat({ user, socket }) {
         <div>
             <div className="left-panel">
                 {users.map(user => (
-                    <User newMessage={newMessage} key={user.id} user={user} selected={selectedUser === user} select={onSelectUser} users={users} messagedUser={messagedUser} newMsg={emitedMessage?.from === user?.privateChatRoomID} />
+                    <User newMessage={newMessage} key={user.id} user={user} selected={selectedUser === user} select={onSelectUser} users={users} messagedUser={messagedUser} newMsg={emittedMessage?.from === user?.privateChatRoomID} />
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} socket={socket} setNewMessage={setNewMessage} users={users} />
+                <MessagePanel user={selectedUser} socket={socket} setNewMessage={setNewMessage} users={users} removeNotification={removeNotification} />
             )
             }
         </div>

@@ -6,7 +6,7 @@ import './MessagePanel.css'
 import { useEffect } from "react";
 import { useSocket } from "../../context/SocketProvider";
 
-function MessagePanel({ user, socket, setNewMessage, findUser, users }) {
+function MessagePanel({ user, socket, setNewMessage, findUser, users, removeNotification  }) {
     const [message, setMessage] = useState('')
     const [chatMessages, setChatMessages] = useState([])
     const [selectedMessages, setSelectedMessage] = useState([])
@@ -16,7 +16,7 @@ function MessagePanel({ user, socket, setNewMessage, findUser, users }) {
 
 
 
-
+    removeNotification(user, message)
 
     // const socket = useSocket()
 
