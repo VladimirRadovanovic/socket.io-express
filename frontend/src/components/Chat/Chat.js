@@ -20,10 +20,10 @@ function Chat({ user, socket }) {
     const [selectedUser, setSelectedUser] = useState(null)
     console.log(allMessages, 'users))))))))))))')
 
-    const [selectedMessages, setSelectedMessage] = useState([])
+    // const [selectedMessages, setSelectedMessage] = useState([])
 
-    const [fromUser, setFromUser] = useState(null)
-    const [toUser, setToUser] = useState(null)
+    // const [fromUser, setFromUser] = useState(null)
+    // const [toUser, setToUser] = useState(null)
     // console.log(selectedMessages, toUser, 'compare messages')
 
 
@@ -46,12 +46,12 @@ function Chat({ user, socket }) {
 
     useEffect(() => {
 
-        const initReactiveProperties = (user) => {
+        // const initReactiveProperties = (user) => {
             // user.connected = true;
 
             // user.messages = [];
-            user.hasNewMessages = false;
-        };
+            // user.hasNewMessages = false;
+        // };
 
         // socket.on('connect', () => {
         //     users.forEach(user => {
@@ -158,19 +158,19 @@ function Chat({ user, socket }) {
 
         // });
 
-        socket.on("private message", (message, to) => {
-            console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+        // socket.on("private message", (message, to) => {
+        //     console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
 
-            // const msgs = messages.filter(message => (
-            //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
-            // ))
-            // console.log( msgs, 'messages and msgs!!!!!!!!!!')
-            // setSelectedMessage(msgs)
-            if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
+        //     // const msgs = messages.filter(message => (
+        //     //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
+        //     // ))
+        //     // console.log( msgs, 'messages and msgs!!!!!!!!!!')
+        //     // setSelectedMessage(msgs)
+        //     if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
 
-                setSelectedMessage(pre => [...pre, message])
-            }
-        })
+        //         setSelectedMessage(pre => [...pre, message])
+        //     }
+        // })
 
         // socket.on("session", ({ sessionID, userID }) => {
             // attach the session ID to the next reconnection attempts
@@ -181,10 +181,10 @@ function Chat({ user, socket }) {
             // save the ID of the user
             // socket.userID = userID;
         // });
-        socket.on('user selection', messages => {
-            console.log(messages, 'user selected messages')
-            setSelectedMessage(messages)
-        })
+        // socket.on('user selection', messages => {
+        //     console.log(messages, 'user selected messages')
+        //     setSelectedMessage(messages)
+        // })
 
         return () => {
             socket.off("connect");
@@ -192,8 +192,8 @@ function Chat({ user, socket }) {
             socket.off("users");
             socket.off("user connected");
             socket.off("user disconnected");
-            socket.off("private message");
-            socket.off("user selection");
+            // socket.off("private message");
+            // socket.off("user selection");
         }
     }, [users, user])
 
@@ -210,7 +210,7 @@ function Chat({ user, socket }) {
                 ))}
             </div>
             {selectedUser && (
-                <MessagePanel user={selectedUser} selectedMessages={selectedMessages} setSelectedMessage={setSelectedMessage} fromUser={fromUser} toUser={toUser} socket={socket} />
+                <MessagePanel user={selectedUser} socket={socket} />
             )
             }
         </div>

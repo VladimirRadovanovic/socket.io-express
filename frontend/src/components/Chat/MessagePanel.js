@@ -6,9 +6,10 @@ import './MessagePanel.css'
 import { useEffect } from "react";
 import { useSocket } from "../../context/SocketProvider";
 
-function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, toUser, socket }) {
+function MessagePanel({ user, socket }) {
     const [message, setMessage] = useState('')
     const [chatMessages, setChatMessages] = useState([])
+    const [selectedMessages, setSelectedMessage] = useState([])
     // const [length, setLength] = useState(user.messages.length)
 
 
@@ -68,6 +69,31 @@ function MessagePanel({ user, selectedMessages, setSelectedMessage, fromUser, to
     // const isValid = () => {
     //     return message.length > 0
     // }
+    useEffect(() => {
+
+        socket.on('user selection', messages => {
+            console.log(messages, 'user selected messages')
+            setSelectedMessage(messages)
+        })
+
+        socket.on("private message", (message, to) => {
+            console.log(message, to, 'please be here messages**************!!!!!!!!!!!!!!!!!!!!!!')
+
+            // const msgs = messages.filter(message => (
+            //     user.privateChatRoomID === message.from && selectedUser.privateChatRoomID === message.to
+            // ))
+            // console.log( msgs, 'messages and msgs!!!!!!!!!!')
+            // setSelectedMessage(msgs)
+            if (message.from === user?.privateChatRoomID || message.to === user?.privateChatRoomID) {
+
+                setSelectedMessage(pre => [...pre, message])
+            }
+        })
+        return () => {
+            socket.off("private message");
+            socket.off("user selection");
+        }
+    })
 
     console.log(selectedMessages.length > 0,  selectedMessages[0]?.to ,user.privateChatRoomID , selectedMessages[0]?.from)
     return (
